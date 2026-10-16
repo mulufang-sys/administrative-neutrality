@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>公務人員行政中立宣導與線上測驗系統 | 1070828宣導資料</title>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-light: #3b82f6;
+      --primary-dark: #1e3a8a;
+      --secondary: #059669;
+      --accent: #d97706;
+      --danger: #dc2626;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Top Banner & Header */
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%);
+      color: #ffffff;
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    header h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      line-height: 1.25;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* Navigation Bar */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.5rem 0.85rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--primary);
+      background-color: #eff6ff;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1.25rem;
+    }
+
+    section {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 2.25rem 2rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 0.75rem;
+    }
+
+    .section-title span.icon {
+      font-size: 1.8rem;
+    }
+
+    /* Grid & Cards */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .principle-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-top: 4px solid var(--primary-light);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .principle-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    }
+
+    .principle-card h3 {
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Personnel Tags & List */
+    .personnel-category {
+      margin-bottom: 1.5rem;
+    }
+
+    .category-header {
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tag-direct { background: #dbeafe; color: #1e40af; }
+    .tag-quasi { background: #fef3c7; color: #92400e; }
+    .tag-special { background: #fee2e2; color: #991b1b; }
+
+    .personnel-list {
+      list-style-type: none;
+      padding-left: 0.5rem;
+    }
+
+    .personnel-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+    }
+
+    .personnel-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0.5rem;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    /* Comparison Table */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+    }
+
+    th {
+      background-color: #f8fafc;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    tr:hover {
+      background-color: #f1f5f9;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .status-allowed { background: #dcfce7; color: #166534; }
+    .status-forbidden { background: #fee2e2; color: #991b1b; }
+
+    /* Rules Alert Box */
+    .alert-box {
+      background: #eff6ff;
+      border-left: 5px solid var(--primary-light);
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.25rem 0;
+    }
+
+    .alert-box h4 {
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Accordion / FAQ */
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 0.85rem;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      background: #f8fafc;
+      padding: 1rem 1.25rem;
+      font-weight: 700;
+      color: #1e293b;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    .faq-question:hover {
+      background: #edf2f7;
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 1.25rem;
+      background: #ffffff;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .faq-item.open .faq-toggle {
+      transform: rotate(180deg);
+    }
+
+    .faq-toggle {
+      transition: transform 0.2s;
+    }
+
+    /* Case Studies */
+    .case-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      background: #ffffff;
+    }
+
+    .case-card h3 {
+      color: #0f172a;
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .case-desc {
+      background: #f8fafc;
+      padding: 1rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      margin-bottom: 0.85rem;
+      color: #334155;
+    }
+
+    .case-legal {
+      border-left: 3px solid var(--secondary);
+      padding-left: 1rem;
+      font-size: 0.95rem;
+      color: #065f46;
+    }
+
+    /* Quiz Section */
+    .quiz-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .quiz-qnum {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .quiz-question {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-option:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .quiz-option input[type="radio"] {
+      cursor: pointer;
+      width: 1.1rem;
+      height: 1.1rem;
+      accent-color: var(--primary);
+    }
+
+    .quiz-feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    .quiz-feedback.correct {
+      display: block;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+    }
+
+    .quiz-feedback.incorrect {
+      display: block;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
+    .quiz-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    .score-banner {
+      display: none;
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .score-banner h3 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .score-banner p {
+      font-size: 1.1rem;
+      color: #e0e7ff;
+    }
+
+    /* JSON Box */
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      max-height: 400px;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      margin-top: 4rem;
+      font-size: 0.95rem;
+    }
+
+    footer a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 1.75rem; }
+      section { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="badge">基隆市政府人事處 編印 (107年8月)</div>
+    <h1>公務人員行政中立宣導與實務測驗網</h1>
+    <p>嚴守行政中立 ‧ 恪遵三不原則 ‧ 依法公正施政 ‧ 增進人民信賴</p>
+  </header>
+
+  <!-- Sticky Nav -->
+  <nav id="navbar">
+    <a href="#principles" class="active">🎯 三不原則</a>
+    <a href="#personnel">👥 適用對象</a>
+    <a href="#matrix">⚖️ 行為態樣比較</a>
+    <a href="#prohibitions">🚫 禁止紅線</a>
+    <a href="#cases">📖 實務案例</a>
+    <a href="#faq">❓ 重要問答</a>
+    <a href="#quiz">📝 10題線上測驗</a>
+    <a href="#json-data">📦 JSON資料</a>
+  </nav>
+
+  <main>
+
+    <!-- 1. Principles -->
+    <section id="principles">
+      <h2 class="section-title"><span class="icon">🎯</span> 核心準則：行政中立「三不原則」</h2>
+      <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+        公務人員執行職務時應依法行政、執行公正、政治中立。以下為所有公務人員平日及選舉期間最關鍵的行為準繩：
+      </p>
+      <div class="grid-3">
+        <div class="principle-card">
+          <h3>🕒 不利用上班時間</h3>
+          <p>公務人員不得於上班或勤務時間（包含加班、出差等），從事政黨或其他政治團體之活動。但依業務性質執行職務之必要行為（如警察秩序維護、環保稽查）不在此限。</p>
+        </div>
+        <div class="principle-card">
+          <h3>🏢 不利用公家資源</h3>
+          <p>非因公務需要，嚴禁動用任何行政資源（包括公物、公款、場所、房舍、人力、公務電腦、影印機及公務車等）進行政治宣傳、編印散發張貼宣傳品或支持/反對特定候選人。</p>
+        </div>
+        <div class="principle-card">
+          <h3>🤝 不利用職務關係</h3>
+          <p>不得利用職權、影響力或機會，迫使他人加入或不加入政黨，或為候選人募款、收受捐助，亦不得妨礙他人依法募款或濫用職權影響他人行使投票權。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Target Personnel -->
+    <section id="personnel">
+      <h2 class="section-title"><span class="icon">👥</span> 各類人員適用與準用範圍</h2>
+      
+      <div class="personnel-category">
+        <div class="category-header tag-direct">
+          <span>依法直接適用對象（公務人員行政中立法第2條）</span>
+          <span>法定嚴格規範</span>
+        </div>
+        <ul class="personnel-list">
+          <li><strong>常任公務人員</strong>：秘書長、副秘書長、顧問、參事、技監、參議等高階文官。</li>
+          <li><strong>機關首長及行政主管</strong>：主計、人事、警察、政風等機關首長，以及各區公所區長。</li>
+          <li><strong>基層依法任用人員</strong>：市府所屬各機關學校依法任用之有給專任人員（含<strong>機要人員</strong>）。</li>
+        </ul>
+      </div>
+
+      <div class="personnel-category">
+        <div class="category-header tag-quasi">
+          <span>依法準用對象（公務人員行政中立法第17條）</span>
+          <span>比照常任文官規範</span>
+        </div>
+        <ul class="personnel-list">
+          <li><strong>公立學校兼行政主管</strong>：公立學校校長、兼任行政職務之教師（如主任、組長）。</li>
+          <li><strong>約聘僱人員</strong>：市府所屬各機關學校之約聘、約僱人員。</li>
+          <li><strong>公營事業決策人員</strong>：公營事業對經營政策負有主要決策責任者（如捷運、果菜及魚市場公司董事長、總經理、代表公股之董監事）。</li>
+          <li><strong>行政法人專任人員</strong>：行政法人之有給專任人員。</li>
+        </ul>
+      </div>
+
+      <div class="personnel-category">
+        <div class="category-header tag-special">
+          <span>特別規範對象（非直接適用中立法，但另有嚴格法規規範）</span>
+          <span>社會高度檢驗</span>
+        </div>
+        <ul class="personnel-list">
+          <li><strong>市長、副市長及政務首長</strong>：受《政務人員法草案》規範，明定民選首長準用。雖法案尚在立法程序，惟顧及文官體系與社會觀感，仍須嚴格遵循政治活動界線與「三不原則」。</li>
+          <li><strong>工友、技工、駕駛、臨時人員</strong>：遵守行政院《行政院及所屬各機關學校工友及臨時人員辦理事務維持中立注意事項》。</li>
+          <li><strong>駐衛警察</strong>：依內政部《各機關學校團體駐衛警察設置管理辦法》第19條之1規定，<strong>準用</strong>行政中立法。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. Behavior Matrix -->
+    <section id="matrix">
+      <h2 class="section-title"><span class="icon">⚖️</span> 各類人員應遵守行政中立之行為態樣</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1rem;">
+        依宣導資料第 5 頁整理，對比民選政務首長與常任公務人員在平時與選舉期間的行為界線：
+      </p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 15%;">時間</th>
+              <th style="width: 25%;">行為態樣</th>
+              <th style="width: 15%;">民選首長/政務人員</th>
+              <th style="width: 15%;">常任公務人員</th>
+              <th>法令重點說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="3"><strong>平時與選舉期間</strong></td>
+              <td>參加政黨或其他政治團體活動</td>
+              <td><span class="status-badge status-allowed">允許（V）</span></td>
+              <td><span class="status-badge status-allowed">允許（V）</span></td>
+              <td>應於請假期間或非上班時間從事，且<strong>不得兼任黨職</strong>或競選辦事處職務。</td>
+            </tr>
+            <tr>
+              <td>動用行政資源支持或反對特定政黨/候選人</td>
+              <td><span class="status-badge status-forbidden">禁止（X）</span></td>
+              <td><span class="status-badge status-forbidden">禁止（X）</span></td>
+              <td>嚴禁用公務、公款、場所、房舍、公務車及人力印製、散發宣傳品或辦理造勢活動。</td>
+            </tr>
+            <tr>
+              <td>公開站台、助講、遊行或拜票</td>
+              <td><span class="status-badge status-allowed">允許（V）</span><br><small>(須請假或非上班)</small></td>
+              <td><span class="status-badge status-forbidden">禁止（X）</span><br><small>(親屬例外)</small></td>
+              <td>常任公務員一律禁止。<strong>例外</strong>：候選人為配偶或二親等內血親、姻親者不受限制。</td>
+            </tr>
+            <tr>
+              <td><strong>選舉期間</strong></td>
+              <td>政黨或公職候選人至辦公場所拜票造訪</td>
+              <td><span class="status-badge status-forbidden">禁止（X）</span></td>
+              <td><span class="status-badge status-forbidden">禁止（X）</span></td>
+              <td>出入口應張貼禁止競選告示；遇造訪應委婉勸阻；辦公務活動避免候選人上台宣傳。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. Absolute Prohibitions -->
+    <section id="prohibitions">
+      <h2 class="section-title"><span class="icon">🚫</span> 六大絕對禁止事項與親屬例外</h2>
+      <div class="alert-box">
+        <h4>⚠️ 核心紅線：公務人員不得為支持或反對特定政黨或公職候選人從事下列行為（無論上班或下班均禁止）：</h4>
+        <ol style="padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>動用行政資源編印製、散發、張貼文書、圖畫宣傳品或辦理相關造勢活動。</li>
+          <li>在辦公場所懸掛、張貼、穿戴或標示特定政黨或候選人之旗幟、徽章或服飾。</li>
+          <li>主持集會、發起遊行或領導連署活動。</li>
+          <li>對職務相關人員或其職務對象表達政治指示。</li>
+          <li>在大眾傳播媒體（報紙、雜誌、電視、網路等）具銜或具名廣告。</li>
+          <li>公開為公職候選人站台、助講、遊行或拜票。</li>
+        </ol>
+      </div>
+
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 1.25rem; margin-top: 1rem;">
+        <h4 style="color: #166534; margin-bottom: 0.5rem;">🌟 親屬參選之特別例外規定（中立法第9條但書）</h4>
+        <p style="color: #14532d; font-size: 0.95rem;">
+          若公職候選人為公務人員之<strong>配偶及二親等以內血親、姻親</strong>（如父母、子女、兄弟姊妹、公婆、岳父母等）：<br>
+          1. <strong>允許公開為其站台、助講、遊行或拜票</strong>（仍需請假或於非上班時間為之，且不可涉及公務職責）。<br>
+          2. 在大眾傳播媒體廣告時，<strong>得「只具名不具銜」</strong>（不可標記任職機關或職銜）。
+        </p>
+      </div>
+    </section>
+
+    <!-- 5. Case Studies -->
+    <section id="cases">
+      <h2 class="section-title"><span class="icon">📖</span> 實務案例解析</h2>
+
+      <div class="case-card">
+        <h3>📌 案例一：常任文官得否參加黨政平台會議？</h3>
+        <div class="case-desc">
+          <strong>情境簡述：</strong>某政黨召開「協助政務推動文宣平台」大型會議，名單中出現常任文官出席。出席同仁表示事先均有完成請假手續。
+        </div>
+        <div class="case-legal">
+          <strong>法令解析：</strong>公務人員請假參加此類會議，若未涉及競選拜票或支持特定候選人，技術上尚無直接違反中立法；但出席時<strong>應僅就不特定之公共議題討論</strong>，嚴禁為特定候選人政見背書，恪遵保密義務，且應審慎考量社會觀感，避免有損官箴。
+        </div>
+      </div>
+
+      <div class="case-card">
+        <h3>📌 案例二：公職候選人於機關志工活動到場致意</h3>
+        <div class="case-desc">
+          <strong>情境簡述：</strong>區公所動支公款辦理巡守隊及環保志工授旗研習，某立委候選人穿著競選背心到場致意，區公所被指控利用公帑輔選且有差別待遇之嫌。
+        </div>
+        <div class="case-legal">
+          <strong>法令解析：</strong>機關動用公家資源辦理活動，不得以支持或反對特定政黨候選人為目的。若候選人不請自來，主辦單位應委婉提醒不宜有造勢或拜票行為；最關鍵的是<strong>不得有差別待遇</strong>（例如只准特定政黨進場致詞，卻拒絕其他黨派），必須秉持公平公正立場。
+        </div>
+      </div>
+
+      <div class="case-card">
+        <h3>📌 案例三：警察局長請假替「擬參選人」站台高喊凍蒜</h3>
+        <div class="case-desc">
+          <strong>情境簡述：</strong>某市長「擬參選人」前往宮廟拜票造勢，警察局長請假現身相挺，並跟隨群眾高喊「凍蒜」，引發各界批評，警政署最終將其記申誡 1 次。
+        </div>
+        <div class="case-legal">
+          <strong>法令解析：</strong>當時市長身分為「擬參選人」而非公告之公職候選人，且局長事前已請假，技術上未直接牴觸行政中立法第9條；但其公開言行造成社會大眾對警察行政中立產生強烈疑慮，嚴重損及警譽與文官官箴，警政署依警察人員獎懲標準以「<strong>言行失檢</strong>」核予申誡處分。<strong>「法律是最低限制，公務人員應兼顧社會觀感並自律！」</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. FAQ -->
+    <section id="faq">
+      <h2 class="section-title"><span class="icon">❓</span> 重要問與答（FAQ）</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Q1. 民選地方首長及政治性任命之政務人員，是否適用行政中立法？</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          答：是類人員均非行政中立法之適（準）用對象。惟銓敘部已將其規範列入《政務人員法草案》（第13條至第20條），並明定民選首長準用。雖尚未完成立法程序，但顧及社會觀感，仍請長官配合遵循三不原則與中立規範。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Q2. 行政中立法未明文規範的行為，是否均可自由從事？</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          答：否。部分行為雖未直接違反行政中立法，但仍應兼顧社會觀感，留意是否違背公務員官箴或影響機關聲譽。如經查證屬實者，機關仍得依公務人員考績法或相關平時獎懲規定予以懲處。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Q3. 競選連任的公職參選人，得否於機關活動時要求上臺致詞？</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          答：可以，但應留意避免提到任何競選言語或宣傳口號，亦不得於現場發放相關競選文宣品。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Q4. 公務人員登記為公職候選人，是否得請假從事競選拜票？</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          答：可以。依中立法第11條規定，自候選人名單公告之日起至投票日止，應依規定請事假或休假。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Q5. 政黨邀請公務人員參加政策會議，前往是否違法？</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          答：雖可出席，但應僅就不特定之公共議題予以討論，避免表態為特定候選人政見背書，且應嚴守公務員服務法不得洩漏機關業務機密之規定。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Q6. 長官要求公務人員從事違法政治活動時，應如何處理？</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          答：長官不得要求同仁從事違反行政中立之行為，且同仁不得因拒絕而遭受不利處分。如遇此情事，得向該長官之上級長官報告；未依法處理者，得向監察院檢舉，並依公務人員保障法請求救濟。
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Quiz Section -->
+    <section id="quiz">
+      <h2 class="section-title"><span class="icon">📝</span> 行政中立 10 題線上實務測驗</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+        請依據宣導手冊規定回答下列問題。完成作答後點選「送出評分」即可查看總分與詳解！
+      </p>
+
+      <div id="quiz-container">
+        <!-- Questions injected via JS -->
+      </div>
+
+      <div class="quiz-controls">
+        <button class="btn btn-primary" onclick="submitQuiz()">📊 送出評分並查看成績</button>
+        <button class="btn btn-secondary" onclick="resetQuiz()">🔄 重新測驗</button>
+        <span id="quiz-progress" style="font-weight: 600; color: var(--text-muted);">已作答: 0 / 10 題</span>
+      </div>
+
+      <div id="score-card" class="score-banner">
+        <h3 id="score-text">總分：0 分</h3>
+        <p id="score-evaluation">請完成所有題目以檢視評等</p>
+      </div>
+    </section>
+
+    <!-- 8. JSON Data -->
+    <section id="json-data">
+      <h2 class="section-title"><span class="icon">📦</span> JSON 原始結構資料</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1rem;">
+        此資料集已彙整為標準 JSON 格式，可供測驗題庫匯入、各類系統串接或後續數位教學使用：
+      </p>
+      <div style="margin-bottom: 1rem; display: flex; gap: 0.75rem;">
+        <button class="btn btn-secondary" onclick="copyJSON()">📋 複製完整 JSON</button>
+        <a href="1070828行政中立宣導資料.json" download="1070828行政中立宣導資料.json" class="btn btn-secondary" style="text-decoration: none;">💾 下載 JSON 檔案</a>
+      </div>
+      <pre id="json-display">載入中...</pre>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>資料來源：基隆市政府人事處「公務人員行政中立宣導資料（107年8月）」</p>
+    <p style="margin-top: 0.5rem;">
+      GitHub 專案庫：<a href="https://github.com/mulufang-sys/administrative-neutrality" target="_blank">mulufang-sys / administrative-neutrality</a>
+    </p>
+  </footer>
+
+  <script>
+    // FAQ Accordion Toggle
+    document.querySelectorAll('.faq-question').forEach(item => {
+      item.addEventListener('click', () => {
+        const parent = item.parentElement;
+        parent.classList.toggle('open');
+      });
+    });
+
+    // 10 Quiz Questions
+    const quizData = [
+      {
+        id: 1,
+        question: "依據宣導資料，公務人員於執行職務及參與政治活動時，應嚴格遵循的行政中立「三不原則」不包含下列何者？",
+        options: {
+          A: "不利用上班時間",
+          B: "不利用公家資源",
+          C: "不利用職務關係",
+          D: "不參與政黨組織"
+        },
+        answer: "D",
+        explanation: "三不原則為「不利用上班時間、不利用公家資源、不利用職務關係」。公務人員得依法加入政黨，並非不參與政黨組織，惟不得兼任黨職或競選辦事處職務。"
+      },
+      {
+        id: 2,
+        question: "下列哪一類人員「不適用」公務人員行政中立法，但銓敘部已將其規範列入政務人員法草案中，顧及社會觀感仍須配合遵循？",
+        options: {
+          A: "基隆市政府府本部秘書長與各區區長",
+          B: "公立高級中學校長及兼任總務主任之教師",
+          C: "民選之直轄市長、縣（市）長及政治性任命之政務人員",
+          D: "公營捷運公司之總經理及董事長"
+        },
+        answer: "C",
+        explanation: "民選地方行政首長及政務人員不適用公務人員行政中立法，其行政中立規範列於政務人員法草案（第13條至第20條）。A為常任公務人員（直接適用）；B與D為中立法第17條準用對象。"
+      },
+      {
+        id: 3,
+        question: "關於各機關學校之「技工、工友、臨時人員」以及「駐衛警察」之行政中立規範依據，下列敘述何者正確？",
+        options: {
+          A: "技工與工友直接適用《公務人員行政中立法》",
+          B: "駐衛警察依《各機關學校團體駐衛警察設置管理辦法》規定，準用《公務人員行政中立法》",
+          C: "臨時人員無須遵守任何行政中立規範",
+          D: "駐衛警察與工友均僅遵守《勞動基準法》，不受行政中立約束"
+        },
+        answer: "B",
+        explanation: "駐衛警察依《各機關學校團體駐衛警察設置管理辦法》第19條之1規定準用中立法；技工、工友、駕駛及臨時人員則須遵守行政院訂定之《行政院及所屬各機關學校工友及臨時人員辦理事務維持中立注意事項》。"
+      },
+      {
+        id: 4,
+        question: "依《公務人員行政中立法》第9條規定，公務人員原則上不得公開為公職候選人站台、助講、遊行或拜票，但下列何種情形屬於法規明定之「例外容許」？",
+        options: {
+          A: "該公職候選人為同黨籍好友，於非上班時間為之",
+          B: "公職候選人為其配偶或二親等以內血親、姻親",
+          C: "公職候選人為同鄉會理事長，並已辦理休假手續",
+          D: "經機關首長口頭許可之特定公職候選人"
+        },
+        answer: "B",
+        explanation: "依公務人員行政中立法第9條第1項第6款但書規定，公職候選人為公務人員之配偶及二親等以內血親、姻親者，得公開為其站台、助講、遊行或拜票（惟仍不得於上班時間為之或動用行政資源）。"
+      },
+      {
+        id: 5,
+        question: "公務人員在公職選舉期間，若要在報紙、網路等大眾傳播媒體刊登支持候選人之廣告，下列何者符合規定？",
+        options: {
+          A: "只要請假即可具名且具銜刊登廣告",
+          B: "公職候選人為其配偶或二親等內親屬時，得只具名不具銜廣告",
+          C: "任何人只要自費刊登，皆可具銜廣告",
+          D: "公職候選人為同校校友時，得只具銜不具名廣告"
+        },
+        answer: "B",
+        explanation: "依公務人員行政中立法第9條第1項第5款但書規定，公職候選人之配偶及二親等以內血親、姻親，「只具名不具銜」者不在此限。其餘情況一律禁止在大眾傳播媒體具銜或具名廣告。"
+      },
+      {
+        id: 6,
+        question: "關於公務人員參加政黨活動的限制，下列敘述何者「錯誤」？",
+        options: {
+          A: "公務人員得加入政黨，但不得兼任政黨職務",
+          B: "公務人員不得兼任公職候選人競選辦事處之職務",
+          C: "公務人員可以在上班時間於機關內部成立政黨黨團辦公室",
+          D: "公務人員得於請假或非上班時間參加政黨活動"
+        },
+        answer: "C",
+        explanation: "公務人員嚴禁於上班或勤務時間從事政黨活動，更不得於政府機關內部成立或運作政黨黨團及從事各種黨務活動。"
+      },
+      {
+        id: 7,
+        question: "公務人員經登記為公職候選人者，依《公務人員行政中立法》第11條規定，其請假義務為何？",
+        options: {
+          A: "自登記日起至投票日止，應全面辦理留職停薪",
+          B: "自候選人名單公告之日起至投票日止，應依規定請事假或休假",
+          C: "僅有投票當日需要請公假",
+          D: "無須請假，只要不耽誤原本業務即可"
+        },
+        answer: "B",
+        explanation: "依中立法第11條規定，公務人員登記為公職候選人者，自候選人名單公告之日起至投票日止，應依規定請事假或休假。"
+      },
+      {
+        id: 8,
+        question: "在選舉委員會發布選舉公告日至投票日止之選舉期間，機關辦公處所的管理措施何者正確？",
+        options: {
+          A: "應歡迎各黨派候選人依序至各辦公室拜票，以展現親民",
+          B: "應禁止政黨、公職候選人或其支持者之造訪拜票活動，並應於各出入口明顯處張貼禁止競選活動之告示",
+          C: "僅有在機關內部大禮堂才可以穿戴競選服飾拜票",
+          D: "只需口頭告知警衛，無需張貼任何書面告示"
+        },
+        answer: "B",
+        explanation: "依行政中立法第13條規定，於選舉期間應禁止政黨、公職候選人或其支持者之造訪活動，並應於辦公、活動場所之各出入口明顯處所張貼禁止競選活動之告示。"
+      },
+      {
+        id: 9,
+        question: "長官若要求公務人員從事違反行政中立之行為時，公務人員應如何應對與保障自身權益？",
+        options: {
+          A: "服從是公務員天職，長官命令一律不得拒絕",
+          B: "長官不得要求公務人員為違反行政中立行為；若因拒絕而遭受不利處分，得向該長官之上級長官報告，未獲處理得向監察院檢舉",
+          C: "公務人員只能默默承受不利考績，無法提出任何救濟",
+          D: "公務人員應立即至媒體爆料，不得循行政體系反映"
+        },
+        answer: "B",
+        explanation: "依中立法第14條及第15條規定，長官不得要求公務人員從事違法行為，且同仁不得因拒絕而遭受不公平對待或不利處分。遇有情事得向上級長官報告，未獲處理得向監察院檢舉，並依公務人員保障法請求救濟。"
+      },
+      {
+        id: 10,
+        question: "宣導手冊中的實務案例三（警察局長請假為直轄市長「擬參選人」拜票站台高喊凍蒜），警政署最終將其記申誡一次，其主要法理依據與考量為何？",
+        options: {
+          A: "因該對象為「擬參選人」且局長請假，故已構成違反行政中立法第9條之刑事責任",
+          B: "該行為雖未直接違反行政中立法，但已損及警察行政中立形象與官箴，機關得依公務員獎懲標準以言行失檢懲處",
+          C: "警察人員即便在非上班時間亦絕對不可參與任何宗教祈福活動",
+          D: "局長因未先向中選會報備，故處以行政罰鍰"
+        },
+        answer: "B",
+        explanation: "因市長當時為『擬參選人』非正式公職候選人且局長有請假，技術上未直接牴觸行政中立法；但因引發各界批評，有損警察官箴與警譽，警政署依警察人員獎懲標準表以『言行失檢』核予申誡1次處分。此案例強調公務人員仍須顧及社會觀感與文官官箴。"
+      }
+    ];
+
+    // Render Quiz
+    const quizContainer = document.getElementById('quiz-container');
+    quizData.forEach((q, index) => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'quiz-card';
+      qDiv.id = `q-card-${q.id}`;
+
+      let optionsHtml = '';
+      for (const [key, val] of Object.entries(q.options)) {
+        optionsHtml += `
+          <label class="quiz-option" id="label-${q.id}-${key}">
+            <input type="radio" name="quiz-${q.id}" value="${key}" onchange="updateProgress()">
+            <span><strong>(${key})</strong> ${val}</span>
+          </label>
+        `;
+      }
+
+      qDiv.innerHTML = `
+        <div class="quiz-qnum">第 ${index + 1} 題 / 共 10 題</div>
+        <div class="quiz-question">${q.question}</div>
+        <div class="quiz-options">${optionsHtml}</div>
+        <div class="quiz-feedback" id="feedback-${q.id}"></div>
+      `;
+      quizContainer.appendChild(qDiv);
+    });
+
+    function updateProgress() {
+      let answered = 0;
+      quizData.forEach(q => {
+        if (document.querySelector(`input[name="quiz-${q.id}"]:checked`)) {
+          answered++;
+        }
+      });
+      document.getElementById('quiz-progress').textContent = `已作答: ${answered} / 10 題`;
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      let unanswered = 0;
+
+      quizData.forEach(q => {
+        const selected = document.querySelector(`input[name="quiz-${q.id}"]:checked`);
+        const feedbackEl = document.getElementById(`feedback-${q.id}`);
+
+        if (!selected) {
+          unanswered++;
+          feedbackEl.className = 'quiz-feedback incorrect';
+          feedbackEl.innerHTML = `⚠️ <strong>尚未作答！</strong> 正確答案為：<strong>(${q.answer})</strong><br><em>解析：</em>${q.explanation}`;
+        } else if (selected.value === q.answer) {
+          score += 10;
+          feedbackEl.className = 'quiz-feedback correct';
+          feedbackEl.innerHTML = `✅ <strong>回答正確！</strong> 答案為 <strong>(${q.answer})</strong>。<br><em>解析：</em>${q.explanation}`;
+        } else {
+          feedbackEl.className = 'quiz-feedback incorrect';
+          feedbackEl.innerHTML = `❌ <strong>回答錯誤！</strong> 您的選擇為 (${selected.value})，正確答案為 <strong>(${q.answer})</strong>。<br><em>解析：</em>${q.explanation}`;
+        }
+      });
+
+      // Show Score Card
+      const scoreCard = document.getElementById('score-card');
+      const scoreText = document.getElementById('score-text');
+      const scoreEval = document.getElementById('score-evaluation');
+
+      scoreText.textContent = `測驗成果：${score} / 100 分`;
+      if (score === 100) {
+        scoreEval.textContent = "🏆 太棒了！您對公務人員行政中立法制及實務有極為透徹的理解！";
+      } else if (score >= 80) {
+        scoreEval.textContent = "👏 成績優異！請參考答錯題目的解析，進一步掌握例外情境與法規細節。";
+      } else if (score >= 60) {
+        scoreEval.textContent = "👍 測驗及格！建議詳細研讀三不原則、適用對象及站台例外規範。";
+      } else {
+        scoreEval.textContent = "📖 仍有進步空間，建議重新閱讀上方宣導指引與案例解析後再測驗一次！";
+      }
+      scoreCard.style.display = 'block';
+      scoreCard.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetQuiz() {
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+      document.querySelectorAll('.quiz-feedback').forEach(f => {
+        f.style.display = 'none';
+        f.innerHTML = '';
+      });
+      document.getElementById('score-card').style.display = 'none';
+      updateProgress();
+      window.scrollTo({ top: document.getElementById('quiz').offsetTop - 60, behavior: 'smooth' });
+    }
+
+    // Load and Display JSON
+    fetch('1070828行政中立宣導資料.json')
+      .then(res => res.json())
+      .then(data => {
+        window.rawJSONData = data;
+        document.getElementById('json-display').textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(err => {
+        document.getElementById('json-display').textContent = '// 正在本機展示範例結構...';
+      });
+
+    function copyJSON() {
+      const text = document.getElementById('json-display').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('已成功複製 JSON 資料至剪貼簿！');
+      });
+    }
+  </script>
+</body>
+</html>
