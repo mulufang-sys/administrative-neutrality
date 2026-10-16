@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>行政中立線上測驗 - 成績管理後台與報表系統</title>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-hover: #1d4ed8;
+      --secondary: #0f766e;
+      --success: #059669;
+      --danger: #dc2626;
+      --warning: #d97706;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 10px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Bar */
+    .admin-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #ffffff;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .admin-header h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .admin-nav {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .admin-nav a, .admin-nav button {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .admin-nav a:hover, .admin-nav button:hover {
+      background: rgba(255,255,255,0.28);
+    }
+
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Login Screen */
+    #login-modal {
+      max-width: 420px;
+      margin: 4rem auto;
+      background: var(--surface);
+      padding: 2.5rem 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    #login-modal h2 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group {
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      color: #334155;
+    }
+
+    input[type="password"], input[type="text"] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="password"]:focus, input[type="text"]:focus {
+      border-color: var(--primary);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-success:hover { background: #047857; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-secondary { background: #e2e8f0; color: #334155; }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-top: 4px solid var(--primary);
+    }
+
+    .kpi-card h3 {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .kpi-card .number {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .kpi-card .desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Toolbars */
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .actions-group {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      width: 240px;
+    }
+
+    /* Data Table */
+    .table-container {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 0.9rem 1.1rem;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    tr:hover {
+      background: #f1f5f9;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .badge-pass { background: #dcfce7; color: #15803d; }
+    .badge-fail { background: #fee2e2; color: #b91c1c; }
+
+    /* Question details */
+    .ans-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      margin-right: 0.25rem;
+      font-weight: 600;
+    }
+
+    .ans-correct { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .ans-wrong { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+    /* Question Analysis Section */
+    .analysis-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .analysis-card h2 {
+      font-size: 1.25rem;
+      color: #1e293b;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    .bar-label {
+      width: 90px;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .bar-outer {
+      flex: 1;
+      background: #e2e8f0;
+      height: 18px;
+      border-radius: 9999px;
+      overflow: hidden;
+      margin: 0 1rem;
+    }
+
+    .bar-inner {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 9999px;
+      transition: width 0.4s ease;
+    }
+
+    .bar-val {
+      width: 75px;
+      text-align: right;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    /* Print Styles */
+    @media print {
+      body { background: #fff; color: #000; font-size: 11pt; }
+      .admin-header, .toolbar, .admin-nav, .actions-group, .btn, .no-print { display: none !important; }
+      main { max-width: 100%; margin: 0; padding: 0; }
+      .kpi-grid { grid-template-columns: repeat(4, 1fr); margin-bottom: 1.5rem; }
+      .kpi-card { border: 1px solid #ccc; box-shadow: none; padding: 1rem; }
+      .table-container { box-shadow: none; border: 1px solid #000; }
+      table { border-collapse: collapse; }
+      th, td { border: 1px solid #000; padding: 0.5rem; font-size: 10pt; }
+      th { background-color: #eee !important; color: #000; }
+      .print-header { display: block !important; text-align: center; margin-bottom: 1.5rem; }
+      .print-header h1 { font-size: 18pt; margin-bottom: 0.25rem; }
+      .print-header p { font-size: 10pt; color: #555; }
+    }
+
+    .print-header {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Admin Bar -->
+  <header class="admin-header">
+    <h1>📊 行政中立測驗成績管理後台</h1>
+    <nav class="admin-nav">
+      <a href="index.html" target="_blank">🌐 前往測驗前台</a>
+      <button onclick="logoutAdmin()" id="btn-logout" style="display: none;">登出後台</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Login Modal -->
+    <div id="login-modal">
+      <h2>🔐 管理員身分驗證</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.25rem;">
+        請輸入後台管理密碼以存取受測人員成績資料與報表
+      </p>
+
+      <div class="form-group">
+        <label for="admin-pass">後台密碼：</label>
+        <input type="password" id="admin-pass" placeholder="預設密碼：admin888" autofocus>
+        <div id="login-err" style="color: var(--danger); font-size: 0.85rem; margin-top: 0.5rem; display: none;">
+          ⚠️ 密碼錯誤，請重新輸入！
+        </div>
+      </div>
+
+      <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="verifyLogin()">登入管理後台</button>
+      <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+        （初次啟用預設密碼為：<strong>admin888</strong>）
+      </div>
+    </div>
+
+    <!-- Dashboard Main View (Hidden by default) -->
+    <div id="dashboard-view" style="display: none;">
+
+      <!-- Print Only Header -->
+      <div class="print-header">
+        <h1>基隆市政府公務人員行政中立實務測驗 - 成績考核報表</h1>
+        <p>依據 1070828 行政中立宣導資料 ‧ 列印時間：<span id="print-time"></span></p>
+      </div>
+
+      <!-- KPI Overview Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card" style="border-top-color: #3b82f6;">
+          <h3>累計受測總人數</h3>
+          <div class="number" id="kpi-total">0 人</div>
+          <div class="desc">線上已繳卷人數</div>
+        </div>
+        <div class="kpi-card" style="border-top-color: #10b981;">
+          <h3>受測平均分數</h3>
+          <div class="number" id="kpi-avg">0 分</div>
+          <div class="desc">滿分 100 分</div>
+        </div>
+        <div class="kpi-card" style="border-top-color: #f59e0b;">
+          <h3>測驗及格率 (≥60分)</h3>
+          <div class="number" id="kpi-pass-rate">0%</div>
+          <div class="desc" id="kpi-pass-count">及格 0 人 / 不及格 0 人</div>
+        </div>
+        <div class="kpi-card" style="border-top-color: #8b5cf6;">
+          <h3>滿分人數 (100分)</h3>
+          <div class="number" id="kpi-perfect">0 人</div>
+          <div class="desc">精通行政中立法人員</div>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar no-print">
+        <div class="actions-group">
+          <button class="btn btn-success" onclick="exportCSV()">📥 匯出 Excel (CSV) 報表</button>
+          <button class="btn btn-primary" onclick="printReport()">🖨️ 列印成績報表 / 另存PDF</button>
+          <button class="btn btn-secondary" onclick="exportJSON()">💾 備份 JSON</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">📂 匯入 JSON</button>
+          <input type="file" id="import-file" style="display: none;" accept=".json" onchange="importJSON(event)">
+        </div>
+
+        <div class="actions-group">
+          <input type="text" id="search-box" class="search-input" placeholder="🔍 搜尋受測者姓名..." oninput="filterTable()">
+          <button class="btn btn-secondary" onclick="loadMockData()" title="若目前尚無作答，可快速填入示範數據預覽報表">🧪 載入測試範例</button>
+          <button class="btn btn-danger" onclick="clearAllData()">🗑️ 清空所有記錄</button>
+        </div>
+      </div>
+
+      <!-- Main Data Table -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 50px;">序號</th>
+              <th style="width: 120px;">受測人員</th>
+              <th style="width: 160px;">繳卷時間</th>
+              <th style="width: 80px;">總分</th>
+              <th style="width: 90px;">及格狀態</th>
+              <th style="width: 90px;">答對題數</th>
+              <th>各題作答明細 (Q1 ~ Q10)</th>
+              <th class="no-print" style="width: 70px;">管理</th>
+            </tr>
+          </thead>
+          <tbody id="records-tbody">
+            <!-- Records rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Question Accuracy Breakdown -->
+      <div class="analysis-card no-print">
+        <h2>📈 各題答對率分析 (診斷常錯法規重點)</h2>
+        <div id="accuracy-bars">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="no-print" style="text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); background: #ffffff;">
+    <p>公務人員行政中立實務測驗 ‧ 成績管理與報表統計系統</p>
+  </footer>
+
+  <script>
+    const DEFAULT_PASS = "admin888";
+    let records = [];
+
+    // Correct answer key
+    const answerKey = {
+      1: "D", 2: "C", 3: "B", 4: "B", 5: "B",
+      6: "C", 7: "B", 8: "B", 9: "B", 10: "B"
+    };
+
+    // Question brief titles for reporting
+    const questionBriefs = {
+      1: "三不原則內涵",
+      2: "不適用政務人員",
+      3: "工友臨時人員/駐衛警法規",
+      4: "站台助選親屬例外",
+      5: "大眾媒體廣告具名不具銜",
+      6: "政黨活動與機關內部成立黨團",
+      7: "參選公告日起請假義務",
+      8: "辦公場所門禁與張貼告示",
+      9: "長官違法要求之救濟途徑",
+      10: "擬參選人站台與官箴懲處"
+    };
+
+    // Initialize Login State
+    window.addEventListener('DOMContentLoaded', () => {
+      if (sessionStorage.getItem('admin_logged_in') === 'true') {
+        showDashboard();
+      } else {
+        document.getElementById('login-modal').style.display = 'block';
+      }
+    });
+
+    function verifyLogin() {
+      const inputPass = document.getElementById('admin-pass').value.trim();
+      const storedPass = localStorage.getItem('neutrality_admin_password') || DEFAULT_PASS;
+      const err = document.getElementById('login-err');
+
+      if (inputPass === storedPass) {
+        sessionStorage.setItem('admin_logged_in', 'true');
+        err.style.display = 'none';
+        showDashboard();
+      } else {
+        err.style.display = 'block';
+        document.getElementById('admin-pass').focus();
+      }
+    }
+
+    // Press Enter to login
+    document.getElementById('admin-pass').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') verifyLogin();
+    });
+
+    function showDashboard() {
+      document.getElementById('login-modal').style.display = 'none';
+      document.getElementById('dashboard-view').style.display = 'block';
+      document.getElementById('btn-logout').style.display = 'inline-block';
+      loadRecords();
+    }
+
+    function logoutAdmin() {
+      sessionStorage.removeItem('admin_logged_in');
+      location.reload();
+    }
+
+    // Load records from localStorage
+    function loadRecords() {
+      const raw = localStorage.getItem('neutrality_quiz_records');
+      records = raw ? JSON.parse(raw) : [];
+      renderDashboard();
+    }
+
+    function renderDashboard(filterQuery = "") {
+      const tbody = document.getElementById('records-tbody');
+      tbody.innerHTML = '';
+
+      const filtered = records.filter(r => {
+        if (!filterQuery) return true;
+        return r.name.toLowerCase().includes(filterQuery.toLowerCase());
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
+              目前尚無作答記錄。可至前台填寫，或點擊上方「🧪 載入測試範例」以預覽報表格式。
+            </td>
+          </tr>
+        `;
+      } else {
+        filtered.forEach((r, idx) => {
+          const tr = document.createElement('tr');
+
+          let ansDetailsHtml = '';
+          for (let q = 1; q <= 10; q++) {
+            const ansObj = r.answers ? r.answers[q] : null;
+            const userPick = ansObj ? ansObj.selected : "-";
+            const isCorr = ansObj ? ansObj.correct : false;
+
+            ansDetailsHtml += `
+              <span class="ans-tag ${isCorr ? 'ans-correct' : 'ans-wrong'}" title="第${q}題 (${questionBriefs[q]}): 選 ${userPick} (${isCorr ? '正確' : '錯誤，正解為 ' + answerKey[q]})">
+                Q${q}:${userPick}
+              </span>
+            `;
+          }
+
+          tr.innerHTML = `
+            <td>${idx + 1}</td>
+            <td><strong>${r.name}</strong></td>
+            <td>${r.timestamp}</td>
+            <td><strong style="font-size: 1.1rem; color: ${r.score >= 60 ? 'var(--primary)' : 'var(--danger)'};">${r.score}</strong></td>
+            <td>
+              <span class="badge ${r.passed ? 'badge-pass' : 'badge-fail'}">
+                ${r.passed ? '及格' : '不及格'}
+              </span>
+            </td>
+            <td>${r.correctCount || Math.round(r.score / 10)} / 10 題</td>
+            <td>${ansDetailsHtml}</td>
+            <td class="no-print">
+              <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="deleteSingleRecord(${r.id})">刪除</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Update KPIs
+      const total = records.length;
+      document.getElementById('kpi-total').textContent = `${total} 人`;
+
+      if (total > 0) {
+        const sum = records.reduce((acc, cur) => acc + (cur.score || 0), 0);
+        const avg = Math.round((sum / total) * 10) / 10;
+        document.getElementById('kpi-avg').textContent = `${avg} 分`;
+
+        const passCount = records.filter(r => r.passed).length;
+        const passRate = Math.round((passCount / total) * 100);
+        document.getElementById('kpi-pass-rate').textContent = `${passRate}%`;
+        document.getElementById('kpi-pass-count').textContent = `及格 ${passCount} 人 / 不及格 ${total - passCount} 人`;
+
+        const perfectCount = records.filter(r => r.score === 100).length;
+        document.getElementById('kpi-perfect').textContent = `${perfectCount} 人`;
+      } else {
+        document.getElementById('kpi-avg').textContent = '0 分';
+        document.getElementById('kpi-pass-rate').textContent = '0%';
+        document.getElementById('kpi-pass-count').textContent = '及格 0 人 / 不及格 0 人';
+        document.getElementById('kpi-perfect').textContent = '0 人';
+      }
+
+      renderAccuracyBars();
+    }
+
+    // Render Per-Question Accuracy Bars
+    function renderAccuracyBars() {
+      const container = document.getElementById('accuracy-bars');
+      container.innerHTML = '';
+
+      if (records.length === 0) {
+        container.innerHTML = `<div style="color: var(--text-muted); font-size: 0.9rem;">暫無統計數據</div>`;
+        return;
+      }
+
+      for (let q = 1; q <= 10; q++) {
+        let correctQ = 0;
+        records.forEach(r => {
+          if (r.answers && r.answers[q] && r.answers[q].correct) correctQ++;
+        });
+
+        const rate = Math.round((correctQ / records.length) * 100);
+
+        const row = document.createElement('div');
+        row.className = 'bar-row';
+        row.innerHTML = `
+          <div class="bar-label">第 ${q} 題</div>
+          <div style="width: 170px; font-size: 0.85rem; color: var(--text-muted);">${questionBriefs[q]}</div>
+          <div class="bar-outer">
+            <div class="bar-inner" style="width: ${rate}%; background: ${rate >= 70 ? 'var(--success)' : rate >= 50 ? 'var(--warning)' : 'var(--danger)'};"></div>
+          </div>
+          <div class="bar-val">${rate}% (${correctQ}/${records.length})</div>
+        `;
+        container.appendChild(row);
+      }
+    }
+
+    function filterTable() {
+      const query = document.getElementById('search-box').value.trim();
+      renderDashboard(query);
+    }
+
+    // Delete single record
+    function deleteSingleRecord(id) {
+      if (confirm('確定要刪除此筆受測記錄嗎？')) {
+        records = records.filter(r => r.id !== id);
+        localStorage.setItem('neutrality_quiz_records', JSON.stringify(records));
+        renderDashboard();
+      }
+    }
+
+    // Clear all
+    function clearAllData() {
+      if (confirm('⚠️ 警告：確定要清空所有受測人員的成績記錄嗎？此動作無法復原！')) {
+        records = [];
+        localStorage.removeItem('neutrality_quiz_records');
+        renderDashboard();
+      }
+    }
+
+    // Export CSV with UTF-8 BOM (Excel compatible)
+    function exportCSV() {
+      if (records.length === 0) {
+        alert('目前無任何成績資料可匯出！');
+        return;
+      }
+
+      let csv = "\uFEFF"; // Byte Order Mark for UTF-8 Excel support
+      csv += "序號,受測者姓名,作答時間,總分,及格判定,答對題數,第1題,第2題,第3題,第4題,第5題,第6題,第7題,第8題,第9題,第10題\n";
+
+      records.forEach((r, idx) => {
+        let row = [
+          idx + 1,
+          `"${r.name}"`,
+          `"${r.timestamp}"`,
+          r.score,
+          r.passed ? "及格" : "不及格",
+          `${r.correctCount || Math.round(r.score / 10)} / 10`
+        ];
+
+        for (let q = 1; q <= 10; q++) {
+          const ans = r.answers ? r.answers[q] : null;
+          if (ans) {
+            row.push(`"${ans.selected} (${ans.correct ? '對' : '錯，正解:' + ans.correctAnswer})"`);
+          } else {
+            row.push(`"-"`);
+          }
+        }
+        csv += row.join(",") + "\n";
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const dateStr = new Date().toISOString().slice(0, 10);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `行政中立實務測驗_成績報表_${dateStr}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Print Report
+    function printReport() {
+      if (records.length === 0) {
+        alert('目前無任何成績資料可列印！');
+        return;
+      }
+      document.getElementById('print-time').textContent = new Date().toLocaleString('zh-TW', { hour12: false });
+      window.print();
+    }
+
+    // Backup JSON
+    function exportJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(records, null, 2));
+      const downloadAnchor = document.createElement('a');
+      const dateStr = new Date().toISOString().slice(0, 10);
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `neutrality_records_backup_${dateStr}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    // Import JSON
+    function importJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (Array.isArray(imported)) {
+            records = imported;
+            localStorage.setItem('neutrality_quiz_records', JSON.stringify(records));
+            renderDashboard();
+            alert(`成功匯入 ${imported.length} 筆成績記錄！`);
+          } else {
+            alert('匯入格式錯誤，檔案必須為包含記錄陣列的 JSON！');
+          }
+        } catch (err) {
+          alert('JSON 解析失敗，請確認檔案格式正確。');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Load Mock Data
+    function loadMockData() {
+      const mock = [
+        {
+          id: Date.now() - 400000,
+          name: "陳志豪",
+          timestamp: "2026/10/16 09:15:20",
+          score: 100,
+          passed: true,
+          correctCount: 10,
+          wrongCount: 0,
+          answers: {
+            1: { selected: "D", correct: true, correctAnswer: "D" },
+            2: { selected: "C", correct: true, correctAnswer: "C" },
+            3: { selected: "B", correct: true, correctAnswer: "B" },
+            4: { selected: "B", correct: true, correctAnswer: "B" },
+            5: { selected: "B", correct: true, correctAnswer: "B" },
+            6: { selected: "C", correct: true, correctAnswer: "C" },
+            7: { selected: "B", correct: true, correctAnswer: "B" },
+            8: { selected: "B", correct: true, correctAnswer: "B" },
+            9: { selected: "B", correct: true, correctAnswer: "B" },
+            10: { selected: "B", correct: true, correctAnswer: "B" }
+          }
+        },
+        {
+          id: Date.now() - 300000,
+          name: "林美玲",
+          timestamp: "2026/10/16 10:22:45",
+          score: 90,
+          passed: true,
+          correctCount: 9,
+          wrongCount: 1,
+          answers: {
+            1: { selected: "D", correct: true, correctAnswer: "D" },
+            2: { selected: "C", correct: true, correctAnswer: "C" },
+            3: { selected: "B", correct: true, correctAnswer: "B" },
+            4: { selected: "B", correct: true, correctAnswer: "B" },
+            5: { selected: "A", correct: false, correctAnswer: "B" },
+            6: { selected: "C", correct: true, correctAnswer: "C" },
+            7: { selected: "B", correct: true, correctAnswer: "B" },
+            8: { selected: "B", correct: true, correctAnswer: "B" },
+            9: { selected: "B", correct: true, correctAnswer: "B" },
+            10: { selected: "B", correct: true, correctAnswer: "B" }
+          }
+        },
+        {
+          id: Date.now() - 200000,
+          name: "張建國",
+          timestamp: "2026/10/16 11:05:12",
+          score: 80,
+          passed: true,
+          correctCount: 8,
+          wrongCount: 2,
+          answers: {
+            1: { selected: "D", correct: true, correctAnswer: "D" },
+            2: { selected: "C", correct: true, correctAnswer: "C" },
+            3: { selected: "A", correct: false, correctAnswer: "B" },
+            4: { selected: "B", correct: true, correctAnswer: "B" },
+            5: { selected: "B", correct: true, correctAnswer: "B" },
+            6: { selected: "C", correct: true, correctAnswer: "C" },
+            7: { selected: "B", correct: true, correctAnswer: "B" },
+            8: { selected: "B", correct: true, correctAnswer: "B" },
+            9: { selected: "B", correct: true, correctAnswer: "B" },
+            10: { selected: "A", correct: false, correctAnswer: "B" }
+          }
+        },
+        {
+          id: Date.now() - 100000,
+          name: "王小芬",
+          timestamp: "2026/10/16 13:40:02",
+          score: 70,
+          passed: true,
+          correctCount: 7,
+          wrongCount: 3,
+          answers: {
+            1: { selected: "D", correct: true, correctAnswer: "D" },
+            2: { selected: "B", correct: false, correctAnswer: "C" },
+            3: { selected: "B", correct: true, correctAnswer: "B" },
+            4: { selected: "B", correct: true, correctAnswer: "B" },
+            5: { selected: "C", correct: false, correctAnswer: "B" },
+            6: { selected: "C", correct: true, correctAnswer: "C" },
+            7: { selected: "B", correct: true, correctAnswer: "B" },
+            8: { selected: "B", correct: true, correctAnswer: "B" },
+            9: { selected: "A", correct: false, correctAnswer: "B" },
+            10: { selected: "B", correct: true, correctAnswer: "B" }
+          }
+        },
+        {
+          id: Date.now(),
+          name: "黃家豪",
+          timestamp: "2026/10/16 14:18:30",
+          score: 50,
+          passed: false,
+          correctCount: 5,
+          wrongCount: 5,
+          answers: {
+            1: { selected: "A", correct: false, correctAnswer: "D" },
+            2: { selected: "C", correct: true, correctAnswer: "C" },
+            3: { selected: "C", correct: false, correctAnswer: "B" },
+            4: { selected: "A", correct: false, correctAnswer: "B" },
+            5: { selected: "B", correct: true, correctAnswer: "B" },
+            6: { selected: "A", correct: false, correctAnswer: "C" },
+            7: { selected: "B", correct: true, correctAnswer: "B" },
+            8: { selected: "B", correct: true, correctAnswer: "B" },
+            9: { selected: "B", correct: true, correctAnswer: "B" },
+            10: { selected: "C", correct: false, correctAnswer: "B" }
+          }
+        }
+      ];
+
+      records = mock;
+      localStorage.setItem('neutrality_quiz_records', JSON.stringify(records));
+      renderDashboard();
+      alert('已成功載入 5 筆示範成績資料！您現在可以檢視名冊、匯出 CSV 報表或測試列印功能。');
+    }
+  </script>
+</body>
+</html>
